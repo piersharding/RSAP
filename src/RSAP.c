@@ -1412,7 +1412,7 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
     }
 
     // get first column and determine length of table
-    idx = length(VECTOR_ELT(sp_value, 1));
+    idx = length(VECTOR_ELT(sp_value, 0));
     if (idx <= 0) {
     	// empty table columns
     	return;
@@ -1420,6 +1420,7 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
 
     // get field names
     names = getAttrib(sp_value, R_NamesSymbol);
+
 
     for (r = 0; r < idx; r++) {
         line = RfcAppendNewRow(tableHandle, &errorInfo);
@@ -1446,13 +1447,11 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
 							CHAR(u16to8(errorInfo.message)));
 		}
 
-		// must equal columns
-		if (length(sp_value) != fieldCount) {
-			errorcall(R_NilValue, "(set table) Problem with RfcGetFieldCount not the same as column count: %d / %d \n",
-					length(sp_value),
-					fieldCount);
-		}
 
+	    // loop through all Input/Changing/tables parameters and set the values in the call
+	    fieldCount = LENGTH(names);
+
+	    // some might not have parameters like RFC_PING
         // loop through the fields of the table row
 		for (fld = 0; fld < fieldCount; fld++) {
 			sp_name = STRING_ELT(names, fld);
@@ -1464,6 +1463,13 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
 	    								CHAR(u16to8(errorInfo.key)),
 	    								CHAR(u16to8(errorInfo.message)));
 	        }
+
+			// must equal columns
+			if (length(VECTOR_ELT(sp_value, fld)) != idx) {
+				errorcall(R_NilValue, "(set table) Problem with VECTOR length not the same for all columns: %d / %d \n",
+						length(VECTOR_ELT(sp_value, fld)),
+						fieldCount);
+			}
 
 	        // XXX dodgey copy back of field name !!!!!
 	//        memcpy(fieldDesc.name, p_name, strlenU(p_name)*2+2);
@@ -1815,7 +1821,6 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
 
         // set parameter
 //        fprintfU(stderr, cU("Parameter (%d): %s - direction: (%d) - type(%d)\n"), i, parm_desc.name, parm_desc.direction, parm_desc.type);
-
         name = STRING_ELT(names,i);
         switch(parm_desc.direction) {
             case RFC_EXPORT:

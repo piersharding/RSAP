@@ -2,3 +2,6 @@ Version: 0.01 (2012-06-10, released)
 
 	* initial version
 
+Version: 0.02 (Mon Jun 11 06:50:39 NZST 2012, released)
+
+    * fix tables columns so not all required to be passed

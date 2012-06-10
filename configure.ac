@@ -1,6 +1,6 @@
 # original by Friedrich Leisch, much changed by BDR
 
-AC_INIT([RSAP], 0.0.1, [piers@ompka.net])
+AC_INIT([RSAP], 0.0.2, [piers@ompka.net])
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
