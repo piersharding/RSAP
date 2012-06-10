@@ -15,6 +15,12 @@ install.packages('yaml')
 Installation:
 See the file INSTALL for installation instructions.
 
+Examples:
+See the files in the tests/ directory.
+
+Documentation:
+help(RSAP)
+
 Bugs:
 I appreciate bug reports and patches, just mail me! piers@ompka.net
 
