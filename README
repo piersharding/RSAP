@@ -1,0 +1,34 @@
+
+RSAP - An R interface to SAP NetWeaver R/3 systems using the RFC protocol
+-------------------------------------------------------------------------
+
+Copyright (C) Piers Harding 2012 - and beyond, All rights reserved
+
+== Summary
+
+Welcome to the RSAP R module.  This module is intended to facilitate RFC calls to an SAP R/3 system of release 4.6x and above.  It may work for earlier versions but it hasn't been tested.
+
+Prerequisites:
+Please insure that YAML is installed:
+install.packages('yaml')
+
+Installation:
+See the file INSTALL for installation instructions.
+
+Bugs:
+I appreciate bug reports and patches, just mail me! piers@ompka.net
+
+RSAP is Copyright (c) 2012 - and beyond Piers Harding.
+It is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+A copy of the GNU Lesser General Public License (version 2.1) is included in
+the file COPYING.
+
