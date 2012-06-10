@@ -1,0 +1,8 @@
+useDynLib(RSAP, .registration = TRUE, .fixes = "C_")
+
+importFrom(stats, runif)
+
+export(RSAPConnect,RSAPClose,RSAPGetInfo,RSAPValidHandle,RSAPInvoke)
+
+S3method(close, RSAP)
+

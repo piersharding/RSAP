@@ -1,0 +1,17 @@
+Package: RSAP
+Version: 0.01
+Revision: $Rev: 3160 $
+Date: 2012-06-01
+Author: Piers Harding
+Maintainer: Piers Harding <piers@ompka.net>
+Title: SAP NW RFC SDK based access
+Description: SAP NW RFC SDK based access
+SystemRequirements: 
+Depends: R (>= 2.12.0), utils, yaml
+Imports: stats
+LazyLoad: yes
+License: GPL-2 | GPL-3
+BuildVignettes: no
+Packaged: 2012-06-01 06:01:02 UTC; piers
+Repository: CRAN
+Date/Publication: 2012-06-01 06:03:14
