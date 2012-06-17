@@ -1780,7 +1780,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     // bail on a bad lookup
     if (func_desc_handle == NULL) {
         errorcall(R_NilValue, "Problem looking up RFC (%s): %d / %s / %s\n",
-                                    CHAR(func),
+        							CHAR(STRING_ELT(func,0)),
                                     errorInfo.code,
                                     CHAR(u16to8(errorInfo.key)),
                                     CHAR(u16to8(errorInfo.message)));
@@ -1793,7 +1793,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     // bail on a create problem
     if (func_handle == NULL) {
         errorcall(R_NilValue, "Problem looking up RFC (%s): %d / %s / %s\n",
-                                    CHAR(func),
+        							CHAR(STRING_ELT(func,0)),
                                     errorInfo.code,
                                     CHAR(u16to8(errorInfo.key)),
                                     CHAR(u16to8(errorInfo.message)));
@@ -1813,7 +1813,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
         // bail on a bad RfcGetParameterDescByName 
         if (rc != RFC_OK) {
             errorcall(R_NilValue, "Problem in RfcGetParameterDescByName (%s): %d / %s / %s\n",
-                                    CHAR(func),
+            						CHAR(STRING_ELT(func,0)),
                                     errorInfo.code,
                                     CHAR(u16to8(errorInfo.key)),
                                     CHAR(u16to8(errorInfo.message)));
@@ -1857,7 +1857,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     // bail on a bad RFC Call 
     if (rc != RFC_OK) {
         errorcall(R_NilValue, "Problem Invoking RFC (%s): %d / %s / %s\n",
-                    CHAR(func),
+        			CHAR(STRING_ELT(func,0)),
                     errorInfo.code,
                     CHAR(u16to8(errorInfo.key)),
                     CHAR(u16to8(errorInfo.message)));
@@ -1867,7 +1867,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     rc = RfcGetParameterCount(func_desc_handle, &idx, &errorInfo);
     if (rc != RFC_OK) {
         errorcall(R_NilValue, "Problem in RfcGetParameterCount (%s): %d / %s / %s\n",
-                                CHAR(func),
+        						CHAR(STRING_ELT(func,0)),
                                 errorInfo.code,
                                 CHAR(u16to8(errorInfo.key)),
                                 CHAR(u16to8(errorInfo.message)));
@@ -1881,7 +1881,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
         // bail on a bad RfcGetParameterDescByIndex
         if (rc != RFC_OK) {
             errorcall(R_NilValue, "Problem in RfcGetParameterDescByIndex (%s): %d / %s / %s\n",
-                                    CHAR(func),
+            						CHAR(STRING_ELT(func,0)),
                                     errorInfo.code,
                                     CHAR(u16to8(errorInfo.key)),
                                     CHAR(u16to8(errorInfo.message)));
@@ -1916,7 +1916,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     rc = RfcDestroyFunction(func_handle, &errorInfo);
     if (rc != RFC_OK) {
         errorcall(R_NilValue, "Problem in RfcDestroyFuncton (%s): %d / %s / %s\n",
-                                    CHAR(func),
+        							CHAR(STRING_ELT(func,0)),
                                     errorInfo.code,
                                     CHAR(u16to8(errorInfo.key)),
                                     CHAR(u16to8(errorInfo.message)));

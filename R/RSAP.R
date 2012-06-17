@@ -101,6 +101,34 @@ RSAPInvoke <- function(handle, func, parms)
 }
 
 
+RSAPReadTable <- function(handle, rfc_table, options=list(), fields=list())
+{
+    if(!RSAPValidHandle(handle))
+       stop("argument is not a valid RSAP handle")
+    library(reshape)
+    parms <- list('DELIMITER' = ';',
+              'QUERY_TABLE' = rfc_table,
+              'OPTIONS' = list('TEXT' = options),
+              'FIELDS' = list('FIELDNAME' = fields)
+              )
+	res <- RSAPInvoke(handle, "RFC_READ_TABLE", parms)
+	flds <- sub("\\s+$", "", res$FIELDS$FIELDNAME)
+	data <- data.frame(res$DATA, colsplit(res$DATA$WA, split = ";", names = flds))
+	
+	for (i in 1:length(flds)) {
+		f <- flds[i]
+		typ <- res$FIELDS$TYPE[i]
+		if (typ == 'N' || typ == 'I' || typ == 'P') {
+			data[[f]] <- as.numeric(unlist(lapply(data[[f]], FUN=function (x) {sub("[^\\d\\.\\-\\,]", "", x)})));
+		} else {
+		    data[[f]] <- sub("\\s+$", "", data[[f]]);
+		}
+	}
+	data$WA <- NULL
+    return(data)
+}
+
+
 close.RSAP <- function(con, ...) RSAPClose(con)
 
 RSAPClose <- function(handle)

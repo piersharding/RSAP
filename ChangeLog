@@ -5,3 +5,7 @@ Version: 0.01 (2012-06-10, released)
 Version: 0.02 (Mon Jun 11 06:50:39 NZST 2012, released)
 
     * fix tables columns so not all required to be passed
+
+Version: 0.03 (Mon Jun 18 09:44:43 NZST 2012, released)
+
+    * Add function RSAPReadTable for direct call to RFC_READ_TABLE
