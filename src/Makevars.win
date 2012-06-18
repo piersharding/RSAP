@@ -1,5 +1,5 @@
 PKG_CPPFLAGS=-I.
-PKG_LIBS=-lsapnwrfc -lsapucum
+PKG_LIBS=-L. -lsapnwrfc -lsapucum
 
 all: $(SHLIB)
 
