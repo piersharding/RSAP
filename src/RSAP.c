@@ -583,7 +583,6 @@ SEXP get_structure_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name){
 
 
 void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP value, unsigned fld) {
-    SEXP sp_pvalue;
     RFC_RC rc = RFC_OK;
     RFC_ERROR_INFO errorInfo;
     RFC_TABLE_HANDLE tableHandle;
@@ -1275,8 +1274,8 @@ void set_structure_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, SEXP sp_valu
     RFC_TYPE_DESC_HANDLE typeHandle;
     RFC_FIELD_DESC fieldDesc;
     SAP_UC *p_name;
-    unsigned i, idx, fieldCount;
-    SEXP ans, ansnames, elmt, names;
+    unsigned i, idx;
+    SEXP elmt, names;
 
     idx = length(sp_value);
     names = sp_value;
@@ -1679,7 +1678,6 @@ SEXP RSAPGetInfo(SEXP handle)
     SEXP exptr = getAttrib(handle, install("handle_ptr"));
     SAPNW_CONN_INFO *hptr = R_ExternalPtrAddr(exptr);
 
-    char * ptr;
     SEXP ans, ansnames;
     int i=0;
 
@@ -1745,25 +1743,21 @@ SEXP RSAPGetInfo(SEXP handle)
 
 SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
 {
-    RFC_ATTRIBUTES attribs;
     RFC_ERROR_INFO errorInfo;
     RFC_RC rc = RFC_OK;
     SEXP exptr = getAttrib(handle, install("handle_ptr"));
     SAPNW_CONN_INFO *hptr = R_ExternalPtrAddr(exptr);
 //    Rprintf("got handle %p\n", hptr);
 
-    SEXP ans, ansnames, names, name, value, row, elmt;
+    SEXP ans, ansnames, names, name, value;
     SAP_UC * fname;
     RFC_FUNCTION_DESC_HANDLE func_desc_handle;
     RFC_FUNCTION_HANDLE func_handle;
     RFC_TABLE_HANDLE tableHandle;
     SAP_UC *p_name;
-    int i, r, tidx, fld;
-    RFC_STRUCTURE_HANDLE line;
+    int i;
     RFC_PARAMETER_DESC parm_desc;
-    unsigned idx, tabLen, fieldCount;
-    RFC_TYPE_DESC_HANDLE typeHandle;
-    RFC_FIELD_DESC fieldDesc;
+    unsigned idx;
 
     if (TYPEOF(func) != STRSXP) {
         errorcall(R_NilValue, "Function name is not a string\n");
