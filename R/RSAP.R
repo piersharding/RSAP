@@ -128,8 +128,9 @@ RSAPReadTable <- function(handle, rfc_table, options=list(), fields=list())
     return(data)
 }
 
+print.RSAP_Connector <- function(conn, ...) RSAPGetInfo(conn)
 
-close.RSAP <- function(con, ...) RSAPClose(con)
+close.RSAP_Connector <- function(conn, ...) RSAPClose(conn)
 
 RSAPClose <- function(handle)
 {

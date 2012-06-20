@@ -1575,6 +1575,7 @@ SEXP RSAPRFCConnect(SEXP args)
     SEXP ptr;
     SEXP ans;
     SEXP elmt;
+    S_EVALUATOR SEXP df_class_name;
 
     RFC_ERROR_INFO errorInfo;
     SAPNW_CONN_INFO *hptr;
@@ -1620,7 +1621,10 @@ SEXP RSAPRFCConnect(SEXP args)
     PROTECT(ptr);
     setAttrib(ans, install("handle_ptr"), ptr);
     if(nHandles <= MAX_HANDLES) opened_handles[nHandles] = hptr;
-    UNPROTECT(2);
+    PROTECT(df_class_name = NEW_CHARACTER((Sint) 1));
+    SET_CHR_EL(df_class_name, 0, COPY_TO_USER_STRING("RSAP_Connector"));
+    SET_CLASS_NAME(ans, df_class_name);
+    UNPROTECT(3);
     return ans;
 }
 

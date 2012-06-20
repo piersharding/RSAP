@@ -4,5 +4,7 @@ importFrom(stats, runif)
 
 export(RSAPConnect,RSAPClose,RSAPGetInfo,RSAPValidHandle,RSAPInvoke,RSAPReadTable)
 
-S3method(close, RSAP)
+S3method(print, "RSAP_Connector")
+
+S3method(close, "RSAP_Connector")
 
