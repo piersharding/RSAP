@@ -1,7 +1,7 @@
 Package: RSAP
-Version: 0.03
+Version: 0.04
 Revision: $Rev: 3 $
-Date: 2012-06-11
+Date: 2012-07-17
 Author: Piers Harding
 Maintainer: Piers Harding <piers@ompka.net>
 Title: SAP NW RFC SDK based access

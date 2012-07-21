@@ -1,5 +1,5 @@
 PKG_CPPFLAGS=-I.
-PKG_LIBS=-L. -lsapnwrfc -lsapucum
+PKG_LIBS=sapnwrfc.dll libsapucum.dll
 
 all: $(SHLIB)
 

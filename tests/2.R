@@ -9,8 +9,3 @@ test.get_table <- function()
     checkEquals(10, length(res$ENTRIES$WA))
     checkTrue(RSAPClose(conn))
 }
-           
-#test.deactivation <- function()
-#{
-# DEACTIVATED('Deactivating this test function')
-#}

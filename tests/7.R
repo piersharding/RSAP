@@ -9,8 +9,3 @@ test.read_table <- function()
     checkTrue(length(res$CARRID) >= 15)
     checkTrue(RSAPClose(conn))
 }
-           
-#test.deactivation <- function()
-#{
-# DEACTIVATED('Deactivating this test function')
-#}

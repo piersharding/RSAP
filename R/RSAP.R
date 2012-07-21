@@ -119,7 +119,8 @@ RSAPReadTable <- function(handle, rfc_table, options=list(), fields=list())
 		f <- flds[i]
 		typ <- res$FIELDS$TYPE[i]
 		if (typ == 'N' || typ == 'I' || typ == 'P') {
-			data[[f]] <- as.numeric(unlist(lapply(data[[f]], FUN=function (x) {sub("[^\\d\\.\\-\\,]", "", x)})));
+			data[[f]] <- as.numeric(unlist(lapply(data[[f]], FUN=function (x) {sub("[^\\d\\.\\-\\,]", "", x, perl=TRUE)})));
+			data[[f]][is.na(data[[f]])] <- 0 
 		} else {
 		    data[[f]] <- sub("\\s+$", "", data[[f]]);
 		}
@@ -127,6 +128,86 @@ RSAPReadTable <- function(handle, rfc_table, options=list(), fields=list())
 	data$WA <- NULL
     return(data)
 }
+
+
+RSAPReadCube <- function(handle, cube, ref_date=NULL, chars=list(), kfigures=list(), options=list())
+{
+    if(!RSAPValidHandle(handle))
+       stop("argument is not a valid RSAP handle")
+
+	if (is.null(ref_date))
+	   ref_date <- format(Sys.time(), "%Y%m%d")
+
+    # RSSEM_CHA_VALUES_GET - I_CHANM, I_DATETO=ref_date, I_READ_TEXT='X'
+
+    caliases <- as.list(sub("^\\d+", "", chars))
+    kaliases <- as.list(sub("^\\d+", "", kfigures))
+    parms <- list(
+              'I_INFOCUBE' = cube,
+              'I_REFERENCE_DATE' = ref_date,
+              'I_T_CHA' = list('CHANM' = chars, 'CHAALIAS' = caliases),
+              'I_T_KYF' = list('KYFNM' = kfigures, 'KYFALIAS' = kaliases),
+              'I_T_RANGE' = options
+              )
+	res <- RSAPInvoke(handle, "RSDPL_CUBE_DATA_READ", parms)
+    res <- RSAPReadTable(handle, res$E_TABLENAME)
+    return(res)
+}
+
+
+RSAPGetCube <- function(handle, cube)
+{
+    if(!RSAPValidHandle(handle))
+       stop("argument is not a valid RSAP handle")
+
+    parms <- list(
+              'INFOCUBE' = cube,
+              'OBJVERS' = as.list('A')
+              )
+	res <- RSAPInvoke(handle, "BAPI_CUBE_GETDETAIL", parms)
+    res$INFOOBJECTS$INFOCUBE   <- sub("\\s+$", "", res$INFOOBJECTS$INFOCUBE);
+    res$INFOOBJECTS$INFOOBJECT <- sub("\\s+$", "", res$INFOOBJECTS$INFOOBJECT);
+    res$RETURN <- NULL
+    res$OBJVERS <- NULL
+    res$INFOCUBE <- NULL
+    return(res)
+}
+
+
+RSAPListCubes <- function(handle)
+{
+    if(!RSAPValidHandle(handle))
+       stop("argument is not a valid RSAP handle")
+
+    parms <- list(
+              'CUBETYPE' = as.list('%'),
+              'OBJVERS' = as.list('A')
+              )
+	res <- RSAPInvoke(handle, "BAPI_CUBE_GETLIST", parms)
+    res$INFOCUBELIST$INFOCUBE <- sub("\\s+$", "", res$INFOCUBELIST$INFOCUBE);
+    res$INFOCUBELIST$TEXTLONG <- sub("\\s+$", "", res$INFOCUBELIST$TEXTLONG);
+    res$INFOCUBELIST$INFOAREA <- sub("\\s+$", "", res$INFOCUBELIST$INFOAREA);
+    return(as.data.frame(res$INFOCUBELIST))
+}
+
+     
+RSAPExecInfoQuery <- function(handle, infoprovider, infoquery)
+{
+    if(!RSAPValidHandle(handle))
+       stop("argument is not a valid RSAP handle")
+
+    parms <- list(
+              'I_INFOPROVIDER' = infoprovider,
+              'I_QUERY' = infoquery
+              )
+	res <- RSAPInvoke(handle, "RRW3_GET_QUERY_VIEW_DATA", parms)
+    return(res)
+}
+
+
+#readTable.RSAP_Connector <- function(conn, ...) RSAPReadTable(conn, ...)
+
+#readCube.RSAP_Connector <- function(conn, ...) RSAPReadCube(conn, ...)
 
 print.RSAP_Connector <- function(conn, ...) RSAPGetInfo(conn)
 
@@ -139,3 +220,9 @@ RSAPClose <- function(handle)
     res <- .Call(C_RSAPClose, handle)
     return(res)
 }
+
+#setMethod("readTable.RSAP_Connector",
+#             function(conn, ...) RSAPReadTable(conn, ...)) 
+
+#setMethod("readCube.RSAP_Connector", 
+#             function(conn, ...) RSAPReadCube(conn, ...)) 

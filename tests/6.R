@@ -20,8 +20,3 @@ test.deep_structure <- function()
 
     checkTrue(RSAPClose(conn))
 }
-           
-#test.deactivation <- function()
-#{
-# DEACTIVATED('Deactivating this test function')
-#}

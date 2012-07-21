@@ -22,3 +22,17 @@ This has been tested under Ubuntu 12.04 - how it builds on
 other platforms is unknown.
 
 
+Windows build instructions
+============================
+
+Thanks to Alvaro for making this work.  This was last used for R-2.15.0 under 64bit architecture.
+
+Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version
+Inside the /src folder copy all the content from the following folders:
+   /include from your R installation
+   /include from your nwrfcsdk folder
+   /lib from your nwrfcsdk folder
+Make sure that you're using the right R for the NWRFCSDK folder...R 64bit for NWRFCSDK 64bits.
+ You can check this is you go to Environment Variables --> Path and look for something like this C:\Program Files\R\R-2.15.0\bin\x64 (x32 or x64)
+
+C:\> R CMD INSTALL --build --preclean --clean --no-multiarch -l C:/RSAP RSAP

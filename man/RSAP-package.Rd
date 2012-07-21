@@ -36,6 +36,8 @@
 \author{
   Piers Harding
 }
-
+\seealso{
+  \code{\link{RSAPConnect}}, \code{\link{RSAPGetInfo}}, \code{\link{RSAPInvoke}}, \code{\link{RSAPReadTable}}, \code{\link{RSAPReadCube}}, \code{\link{RSAPClose}}
+}
 \keyword{IO}
 \keyword{SAP}

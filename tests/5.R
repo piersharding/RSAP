@@ -11,8 +11,3 @@ test.changing <- function()
     checkEquals(11, res$COUNTER)
     checkTrue(RSAPClose(conn))
 }
-           
-#test.deactivation <- function()
-#{
-# DEACTIVATED('Deactivating this test function')
-#}

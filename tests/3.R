@@ -8,4 +8,3 @@ test.program_read <- function()
     checkTrue(length(res$SOURCE_EXTENDED$LINE) > 10)
     checkTrue(RSAPClose(conn))
 }
-

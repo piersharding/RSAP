@@ -29,7 +29,7 @@ test.connecting <- function()
     checkTrue(RSAPClose(conn))
 }
            
-test.deactivation <- function()
-{
- DEACTIVATED('Deactivating this test function')
-}
+#test.deactivation <- function()
+#{
+# DEACTIVATED('Deactivating this test function')
+#}

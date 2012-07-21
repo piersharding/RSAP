@@ -7,7 +7,7 @@
 /* RSAP low level interface
  *
  */
-#include <config.h>
+//#include <config.h>
 
 #include <R.h>
 #include <Rdefines.h>
@@ -974,8 +974,8 @@ void set_date_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, SEXP sp_value){
 
     if(!isString(sp_value))
     	errorcall(R_NilValue, "RfcSetDate (%s): not a Scalar\n", CHAR(u16to8(name)));
-    if (length(sp_value) != 8)
-    	errorcall(R_NilValue, "RfcSetDate invalid date format (%s): %s\n", CHAR(u16to8(name)), CHAR(sp_value));
+    //if (length(sp_value) != 8)
+    //	errorcall(R_NilValue, "RfcSetDate invalid date format (%s): %d\n", CHAR(u16to8(name)), length(sp_value));
     p_value = u8to16(STRING_ELT(sp_value,0));
     memcpy((char *)date_value+0, (char *)p_value, 16);
     free(p_value);
@@ -988,7 +988,6 @@ void set_date_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, SEXP sp_value){
 								CHAR(u16to8(errorInfo.key)),
 								CHAR(u16to8(errorInfo.message)));
     }
-
     return;
 }
 
@@ -1004,8 +1003,8 @@ void set_time_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, SEXP sp_value){
 
     if(!isString(sp_value))
     	errorcall(R_NilValue, "RfcSetTime (%s): not a String\n", CHAR(u16to8(name)));
-    if (length(sp_value) != 6)
-    	errorcall(R_NilValue, "RfcSetTime invalid input date format (%s): %s\n", CHAR(u16to8(name)), CHAR(sp_value));
+    //if (length(sp_value) != 6)
+    // 	errorcall(R_NilValue, "RfcSetTime invalid input date format (%s): %s\n", CHAR(u16to8(name)), CHAR(sp_value));
     p_value = u8to16(STRING_ELT(sp_value,0));
     memcpy((char *)time_value+0, (char *)p_value, 12);
     free(p_value);
@@ -1326,7 +1325,7 @@ void set_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
     RFC_ERROR_INFO errorInfo;
     RFC_TABLE_HANDLE tableHandle;
 
-//    fprintfU(stderr, cU("set field name: %s \n"), fieldDesc.name);
+    //fprintfU(stderr, cU("set field name: %s \n"), fieldDesc.name);
     switch (fieldDesc.type) {
         case RFCTYPE_DATE:
             set_date_value(hcont, fieldDesc.name, sp_value);
@@ -1420,7 +1419,6 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
     // get field names
     names = getAttrib(sp_value, R_NamesSymbol);
 
-
     for (r = 0; r < idx; r++) {
         line = RfcAppendNewRow(tableHandle, &errorInfo);
         if (line == NULL) {
@@ -1476,7 +1474,6 @@ void set_table_value(RFC_TABLE_HANDLE tableHandle, SEXP sp_value){
 	        free(p_name);
 		}
     }
-
     return;
 }
 
@@ -1800,7 +1797,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
     // loop through all Input/Changing/tables parameters and set the values in the call 
     idx = LENGTH(parms);
 
-//    Rprintf("no. parameters %d\n", idx);
+    //Rprintf("no. parameters %d\n", idx);
     names = getAttrib(parms, R_NamesSymbol);
 
     // some might not have parameters like RFC_PING
@@ -1818,7 +1815,7 @@ SEXP RSAPInvoke(SEXP handle, SEXP func, SEXP parms)
         }
 
         // set parameter
-//        fprintfU(stderr, cU("Parameter (%d): %s - direction: (%d) - type(%d)\n"), i, parm_desc.name, parm_desc.direction, parm_desc.type);
+        //fprintfU(stderr, cU("Parameter (%d): %s - direction: (%d) - type(%d)\n"), i, parm_desc.name, parm_desc.direction, parm_desc.type);
         name = STRING_ELT(names,i);
         switch(parm_desc.direction) {
             case RFC_EXPORT:
