@@ -132,26 +132,48 @@ RSAPReadTable <- function(handle, rfc_table, options=list(), fields=list())
 
 RSAPReadCube <- function(handle, cube, ref_date=NULL, chars=list(), kfigures=list(), options=list())
 {
-    if(!RSAPValidHandle(handle))
-       stop("argument is not a valid RSAP handle")
-
+	if(!RSAPValidHandle(handle))
+		stop("argument is not a valid RSAP handle")
+	
 	if (is.null(ref_date))
-	   ref_date <- format(Sys.time(), "%Y%m%d")
-
-    # RSSEM_CHA_VALUES_GET - I_CHANM, I_DATETO=ref_date, I_READ_TEXT='X'
-
-    caliases <- as.list(sub("^\\d+", "", chars))
-    kaliases <- as.list(sub("^\\d+", "", kfigures))
-    parms <- list(
-              'I_INFOCUBE' = cube,
-              'I_REFERENCE_DATE' = ref_date,
-              'I_T_CHA' = list('CHANM' = chars, 'CHAALIAS' = caliases),
-              'I_T_KYF' = list('KYFNM' = kfigures, 'KYFALIAS' = kaliases),
-              'I_T_RANGE' = options
-              )
+		ref_date <- format(Sys.time(), "%Y%m%d")
+	
+	# RSSEM_CHA_VALUES_GET - I_CHANM, I_DATETO=ref_date, I_READ_TEXT='X'
+	
+	caliases <- as.list(sub("^\\d+", "", chars))
+	kaliases <- as.list(sub("^\\d+", "", kfigures))
+	parms <- list(
+			'I_INFOCUBE' = cube,
+			'I_REFERENCE_DATE' = ref_date,
+			'I_T_CHA' = list('CHANM' = chars, 'CHAALIAS' = caliases),
+			'I_T_KYF' = list('KYFNM' = kfigures, 'KYFALIAS' = kaliases),
+			'I_T_RANGE' = options
+	)
 	res <- RSAPInvoke(handle, "RSDPL_CUBE_DATA_READ", parms)
-    res <- RSAPReadTable(handle, res$E_TABLENAME)
-    return(res)
+	cube <- RSAPReadTable(handle, res$E_TABLENAME)
+	# add the text label names as another column
+	for (el in chars[chars != '0CALMONTH']) {
+		v <- sub("^\\d+", "", el) # the data.frame vector name
+		vt <- paste(v, "_TEXT", sep="")
+		cube[[vt]] <- cube[[v]]
+		ref_date <- format(Sys.time(), "%Y%m%d")
+		conn <- RSAPConnect("sap.yml")
+		parms <- list('I_CHANM' = el,
+				'I_READ_TEXT' = 'X',
+				'I_DATETO' = ref_date)
+		res <- RSAPInvoke(conn, "RSSEM_CHA_VALUES_GET", parms)
+		res$ETH_CHAVL$IOBJNM   <- sub("\\s+$", "", res$ETH_CHAVL$IOBJNM);
+		res$ETH_CHAVL$VALUE   <- sub("\\s+$", "", res$ETH_CHAVL$VALUE);
+		elements <- res$ETH_CHAVL$VALUE[res$ETH_CHAVL$IOBJNM == el]
+		nms <- res$ETH_CHAVL$VALUE[res$ETH_CHAVL$IOBJNM == '0TXTSH']
+		for (k in elements) {
+			if (length(cube[[v]][cube[[v]] == k]) > 0) {
+				cube[[vt]][cube[[v]] == k] <- nms[elements == k]
+			}
+		}
+	}
+	
+	return(cube)
 }
 
 
