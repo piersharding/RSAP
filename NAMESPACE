@@ -2,7 +2,11 @@ useDynLib(RSAP, .registration = TRUE, .fixes = "C_")
 
 importFrom(stats, runif)
 
-export(RSAPConnect,RSAPClose,RSAPGetInfo,RSAPValidHandle,RSAPInvoke,RSAPReadTable,RSAPReadCube,RSAPGetCube,RSAPListCubes,RSAPExecInfoQuery)
+export(RSAPConnect,RSAPClose,RSAPGetInfo,RSAPValidHandle,RSAPInvoke,RSAPReadTable,RSAPReadCube,RSAPGetCube,RSAPListCubes,RSAPExecInfoQuery,readTable,readCube)
+
+exportClasses(RSAP_Connector)
+
+#exportMethods(readTable)
 
 #S3method(readTable, "RSAP_Connector")
 

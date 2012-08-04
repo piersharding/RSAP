@@ -246,5 +246,15 @@ RSAPClose <- function(handle)
 #setMethod("readTable.RSAP_Connector",
 #             function(conn, ...) RSAPReadTable(conn, ...)) 
 
+readTable <- function(conn, ...){
+                        res <- RSAPReadTable(conn, ...)
+                        return(res)
+                }
+
+readCube <- function(conn, ...){
+                        res <- RSAPReadCube(conn, ...)
+                        return(res)
+                }
+
 #setMethod("readCube.RSAP_Connector", 
 #             function(conn, ...) RSAPReadCube(conn, ...)) 
