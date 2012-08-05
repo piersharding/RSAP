@@ -1,5 +1,6 @@
 \name{RSAPReadCube}
 \alias{RSAPReadCube}
+\alias{readCube}
 \title{SAP RFC function calls}
 \description{
   Open connections to an SAP System for RFC calls
@@ -17,6 +18,7 @@ RSAPReadCube(conn, "infocube name", "reference date", options=list(), fields=lis
 }
 \details{
 
+  \preformatted{
   conn <- RSAPConnect(ashost="nplhost", sysnr="42",
                       client="001", user="developer", 
                       passwd="developer", lang="EN", 
@@ -26,11 +28,13 @@ RSAPReadCube(conn, "infocube name", "reference date", options=list(), fields=lis
                             chars=list("0D_NW_SORG", "0D_NW_PROD"),
                             kfigures=list("0D_NW_NETV"),
                             options=list(CHANM=list('0D_NW_SORG'),SIGN=list('I'), COMPOP=list('EQ'), LOW=list('1514')))
+  # or alias
+  # res <- readCube(conn, ...
 
   print(res)
 
   RSAPClose(conn)
-
+  }
 }
 
 \note{

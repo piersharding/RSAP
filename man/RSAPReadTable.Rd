@@ -1,5 +1,6 @@
 \name{RSAPReadTable}
 \alias{RSAPReadTable}
+\alias{readTable}
 \title{SAP RFC function calls}
 \description{
   Open connections to an SAP System for RFC calls
@@ -14,16 +15,20 @@ RSAPReadTable(conn, "table name", options=list(), fields=list())
   \item{fields}{A list of column names that you want returned from the table}
 }
 \details{
-
+  \preformatted{
   conn <- RSAPConnect(ashost="nplhost", sysnr="42",
                       client="001", user="developer", 
                       passwd="developer", lang="EN", 
                       trace="1", lcheck="1")
 
   res <- RSAPReadTable(conn, "SFLIGHT2")
+  # or use alias
+  # res <- readTable(conn, "SFLIGHT2")
+
   print(res)
 
   RSAPClose(conn)
+  }
 
 }
 
