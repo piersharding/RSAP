@@ -1,17 +1,46 @@
 HowTo install RSAP
 ==================
 
+The package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
+
+
 The easiest way to install RSAP is to clone the repository and use
 R CMD INSTALL
 
-You must ensure that you have the nwrfcsdk installed which is 
+You must ensure that you have the NW RFC SDK installed which is 
 available through downloads on the SAP Service Market Place
+
+First Option:
+
+Using devtools, you can directly install the package from GitHub.
+From R:
+
+install.packages('devtools')
+library(devtools)
+install_github('RSAP', username='piersharding', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'"))
+
+The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
+
+You must ensure that all your installed packages (especially httr, and stringr) are up to date.  The easiest way to do this is to start R and:
+
+update.packages()
+
+
+
+Second Option:
 
 Set the environment variables that locate the INCLUDE and LIB
 directories:
 
 export NWRFCSDK_INCLUDE=/home/piers/code/sap/nwrfcsdk/include
 export NWRFCSDK_LIBS=/home/piers/code/sap/nwrfcsdk/lib
+
+Download the package from GitHub -
+either:
+git clone git@github.com:piersharding/RSAP.git
+
+or:
+retrieve and unpack https://github.com/piersharding/RSAP/archive/master.zip
 
 Then run the build and install command from the package root 
 directory:

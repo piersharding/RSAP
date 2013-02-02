@@ -6,28 +6,28 @@
   Open connections to an SAP System for RFC calls
 }
 \usage{
-RSAPReadTable(conn, "table name", options=list(), fields=list())
+RSAPReadTable(con, saptable, options=list(), fields=list())
 }%"
 \arguments{
-  \item{conn}{an Open SAP RFC Conneciton handle}
-  \item{table name}{The Data Dictionary name of a table to read}
+  \item{con}{an Open SAP RFC Conneciton handle}
+  \item{saptable}{The Data Dictionary name of a table to read}
   \item{options}{list of string values of SQL WHERE clause statements to apply to the table select}
   \item{fields}{A list of column names that you want returned from the table}
 }
 \details{
   \preformatted{
-  conn <- RSAPConnect(ashost="nplhost", sysnr="42",
+  con <- RSAPConnect(ashost="nplhost", sysnr="42",
                       client="001", user="developer", 
                       passwd="developer", lang="EN", 
                       trace="1", lcheck="1")
 
-  res <- RSAPReadTable(conn, "SFLIGHT2")
+  res <- RSAPReadTable(con, "SFLIGHT2")
   # or use alias
-  # res <- readTable(conn, "SFLIGHT2")
+  # res <- readTable(con, "SFLIGHT2")
 
   print(res)
 
-  RSAPClose(conn)
+  RSAPClose(con)
   }
 
 }
@@ -47,7 +47,7 @@ RSAPReadTable(conn, "table name", options=list(), fields=list())
 }
 \examples{\dontrun{
 # read the flight data demo table
-res <- RSAPReadTable(conn, "SFLIGHTS2", options=list("CARRID = 'AA'"), fields=list('CARRID', 'CONNID', 'FLDATE', 'PRICE'))
+res <- RSAPReadTable(con, "SFLIGHTS2", options=list("CARRID = 'AA'"), fields=list('CARRID', 'CONNID', 'FLDATE', 'PRICE'))
 }}
 \keyword{IO}
 \keyword{SAP}

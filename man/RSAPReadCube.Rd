@@ -6,12 +6,12 @@
   Open connections to an SAP System for RFC calls
 }
 \usage{
-RSAPReadCube(conn, "infocube name", "reference date", options=list(), fields=list(), options=list())
+RSAPReadCube(con, cube, ref_date, chars=list(), kfigures=list(), options=list())
 }%"
 \arguments{
-  \item{conn}{an Open SAP RFC Conneciton handle}
-  \item{infocube name}{The technical name of an infocube to read}
-  \item{reference date}{The reference date for data selction from the infocube}
+  \item{con}{an Open SAP RFC Conneciton handle}
+  \item{cube}{The technical name of an infocube to read}
+  \item{ref_date}{The reference date for data selction from the infocube}
   \item{chars}{list of characteristic technical names that you want in the result set}
   \item{kfigures}{A list of key figure technical names that you want in the result set}
   \item{options}{A list of options and their selection criteria based on the technical names of attributes with a syntax like ABAP SELECT-OPTIONS}
@@ -19,26 +19,26 @@ RSAPReadCube(conn, "infocube name", "reference date", options=list(), fields=lis
 \details{
 
   \preformatted{
-  conn <- RSAPConnect(ashost="nplhost", sysnr="42",
+  con <- RSAPConnect(ashost="nplhost", sysnr="42",
                       client="001", user="developer", 
                       passwd="developer", lang="EN", 
                       trace="1", lcheck="1")
 
-  res <- RSAPReadCube(conn, "0D_NW_T01", "20120716", 
+  res <- RSAPReadCube(con, "0D_NW_T01", "20120716", 
                             chars=list("0D_NW_SORG", "0D_NW_PROD"),
                             kfigures=list("0D_NW_NETV"),
                             options=list(CHANM=list('0D_NW_SORG'),SIGN=list('I'), COMPOP=list('EQ'), LOW=list('1514')))
   # or alias
-  # res <- readCube(conn, ...
+  # res <- readCube(con, ...
 
   print(res)
 
-  RSAPClose(conn)
+  RSAPClose(con)
   }
 }
 
 \note{
-  You can run the RSAPListCubes(conn) to get a list of cubes to query.  For each cube you can then run RSAPGetCube(conn, '<cube name>') to get the details of the cube layout.
+  You can run the RSAPListCubes(con) to get a list of cubes to query.  For each cube you can then run RSAPGetCube(con, '<cube name>') to get the details of the cube layout.
 }
 
 \value{
@@ -52,7 +52,7 @@ RSAPReadCube(conn, "infocube name", "reference date", options=list(), fields=lis
 }
 \examples{\dontrun{
 # read the NW demo data info cube
-  res <- RSAPReadCube(conn, "0D_NW_T01", "20120716",chars=list("0D_NW_SORG", "0D_NW_PROD"), kfigures=list("0D_NW_NETV"))
+  res <- RSAPReadCube(con, "0D_NW_T01", "20120716",chars=list("0D_NW_SORG", "0D_NW_PROD"), kfigures=list("0D_NW_NETV"))
 }}
 \keyword{IO}
 \keyword{SAP}

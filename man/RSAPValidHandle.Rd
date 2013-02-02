@@ -1,17 +1,17 @@
-\name{RSAPClose}
-\alias{RSAPClose}
-\title{SAP RFC Close Connections}
+\name{RSAPValidHandle}
+\alias{RSAPValidHandle}
+\title{SAP RFC check valid connection}
 \description{
-  Close an open connection to an SAP System
+  Check a connection handle is valide
 }
 \usage{
-RSAPClose(con)
+RSAPValidHandle(con)
 }%"
 \arguments{
-  \item{con}{an Open SAP RFC Conneciton handle}
+      \item{con}{an SAP RFC Connection handle}
 }
 \details{
-  \code{RSAPClose} closes an RFC connection to a specified SAP system
+  \code{RSAPValidHandle} check a connection handle to SAP is valid
 }
 
 \note{
@@ -29,7 +29,7 @@ RSAPClose(con)
 }
 \examples{\dontrun{
 # Close the connection
-RSAPClose(con)
+RSAPValidHandle(con)
 }}
 \keyword{IO}
 \keyword{SAP}

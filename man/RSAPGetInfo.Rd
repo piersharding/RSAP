@@ -5,10 +5,10 @@
   get connection details regarding partner SAP system
 }
 \usage{
-RSAPGetInfo(conn)
+RSAPGetInfo(con)
 }%"
 \arguments{
-  \item{conn}{an Open SAP RFC Conneciton handle}
+  \item{con}{an Open SAP RFC Conneciton handle}
 }
 \details{
   \code{RSAPGetInfo} get connection details regarding partner SAP system
@@ -29,7 +29,7 @@ RSAPGetInfo(conn)
 }
 \examples{\dontrun{
 # Close the connection
-info <- RSAPGetInfo(conn)
+info <- RSAPGetInfo(con)
 print(info)
 }}
 \keyword{IO}
