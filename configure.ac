@@ -1,6 +1,6 @@
 # original by Friedrich Leisch, much changed by BDR
 
-AC_INIT([RSAP], 0.0.2, [piers@ompka.net])
+AC_INIT([RSAP], 0.7, [piers@ompka.net])
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
@@ -68,12 +68,25 @@ dnl for unixODBC header
 AC_CHECK_SIZEOF(long, 4)
 
 RSAP_CPPFLAGS="${RSAP_CPPFLAGS} ${RSAP_EXT_CPPFLAGS} "
-echo "HERE: ${RSAP_CPPFLAGS}"
+echo "NW RFC SDK flags: ${RSAP_CPPFLAGS}"
 
 dnl substitute RSAP_CPPFLAGS and LIBS
 AC_SUBST(RSAP_CPPFLAGS)
 AC_SUBST(LIBS)
 AC_CONFIG_HEADERS([src/config.h])
 dnl and do subsitution in the src/Makevars.in and src/config.h
+echo "Platform is: ${R_PLATFORM}"
+
+dnl extend the case statement for additional host types as we discover them
+case "${R_PLATFORM}" in
+  *linux*)
+    echo "we have Linux!!"
+    cp src/Makevars.linux src/Makevars.in
+    ;;
+  *)
+    echo "We dont have Linux :-("
+    cp src/Makevars.other src/Makevars.in
+   ;;
+esac
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
