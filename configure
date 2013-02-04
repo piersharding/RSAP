@@ -623,7 +623,9 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+PKG_LIBS
 RSAP_CPPFLAGS
+PKG_CPPFLAGS
 EGREP
 GREP
 CPP
@@ -2225,6 +2227,7 @@ else
   fi
 fi
 
+LIBS=" -lsapnwrfc -lsapucum "
 
 # Check whether --with-nwrfcsdk-lib was given.
 if test "${with_nwrfcsdk_lib+set}" = set; then :
@@ -2232,10 +2235,10 @@ if test "${with_nwrfcsdk_lib+set}" = set; then :
 fi
 
 if test  -n "$nwrfcsdk_lib_path"  ; then
-   LIBS="-L${nwrfcsdk_lib_path} ${LIBS}"
+   LIBS=" -L${nwrfcsdk_lib_path} ${LIBS}"
 else
   if test  -n "${NWRFCSDK_LIBS}"  ; then
-     LIBS="-L${NWRFCSDK_LIBS} ${LIBS}"
+     LIBS=" -L${NWRFCSDK_LIBS} ${LIBS}"
   fi
 fi
 
@@ -2244,6 +2247,7 @@ if test -z "${R_HOME}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
+echo "R_HOME is: ${R_HOME}"
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CPP=`"${R_HOME}/bin/R" CMD config CPP`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
@@ -2251,7 +2255,10 @@ RSAP_EXT_CPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 EXTCPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
 
-CPPFLAGS="${CPPFLAGS} ${RSAP_CPPFLAGS}"
+CPPFLAGS="${CPPFLAGS} ${CFLAGS} ${EXTCPPFLAGS} ${RSAP_CPPFLAGS}"
+PKG_CPPFLAGS="${PKG_CPPFLAGS} ${EXTCPPFLAGS} "
+
+echo "All standard C flags are: ${CPPFLAGS} "
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -3456,7 +3463,7 @@ if test "${ac_cv_header_sapnwrfc_h}" = no; then
    as_fn_error $? "\"SAPNWRFCSDK header sapnwrfc.h not found\"" "$LINENO" 5
 fi
 
-LIBS="${LIBS} -lsapnwrfc -lsapucum "
+PKG_LIBS=" ${LIBS} "
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -3520,8 +3527,10 @@ _ACEOF
 
 
 
-RSAP_CPPFLAGS="${RSAP_CPPFLAGS} ${RSAP_EXT_CPPFLAGS} "
+RSAP_CPPFLAGS="${RSAP_CPPFLAGS} "
 echo "NW RFC SDK flags: ${RSAP_CPPFLAGS}"
+
+
 
 
 
