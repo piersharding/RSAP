@@ -18,7 +18,7 @@ install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c(
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
-See the file INSTALL for full installation instructions.
+See the file INSTALL  (https://github.com/piersharding/RSAP/blob/master/INSTALL) for full installation instructions.
 
 The package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
 
