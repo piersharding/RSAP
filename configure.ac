@@ -1,6 +1,6 @@
 # original by Friedrich Leisch, much changed by BDR
 
-AC_INIT([RSAP], 0.7, [piers@ompka.net])
+AC_INIT([RSAP], 0.9, [piers@ompka.net])
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
@@ -85,15 +85,36 @@ dnl and do subsitution in the src/Makevars.in and src/config.h
 echo "Platform is: ${R_PLATFORM}"
 
 dnl extend the case statement for additional host types as we discover them
+RSAP_BUILD=
 case "${R_PLATFORM}" in
   *linux*)
     echo "we have Linux!"
-    cp src/Makevars.linux src/Makevars.in
+RSAP_BUILD='
+
+all: $(SHLIB)
+
+$(SHLIB): RSAP.o
+
+RSAP.o: RSAP.c
+	$(CC) -E -c $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS) $(OPTIMIZE) $(MPOLLUTE) $(CCCDLFLAGS)  -DSAPwithUNICODE  -DSAPonUNIX   -DSAPwithTHREADS  RSAP.c > RSAP.ii
+	perl ../tools/u16lit.pl -le RSAP.ii
+	$(CC) -c  $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS)  -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fno-strict-aliasing -pipe -fstack-protector -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g  -fPIC -DSAPwithUNICODE  -DSAPonUNIX  -D__NO_MATH_INLINES -fPIC  -DSAPwithTHREADS   RSAP.i
+'
     ;;
   *)
     echo "We dont have Linux :-("
-    cp src/Makevars.other src/Makevars.in
+RSAP_BUILD='
+
+all: $(SHLIB)
+
+$(SHLIB): RSAP.o
+
+RSAP.o: RSAP.c
+	$(CC) -c  $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS)  $(OPTIMIZE) $(MPOLLUTE) $(CCCDLFLAGS)  -D_REENTRANT -fno-strict-aliasing -pipe -fstack-protector -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g  -fPIC -DSAPwithUNICODE  -DSAPonUNIX  -D__NO_MATH_INLINES -fPIC  -DSAPwithTHREADS   RSAP.c
+
+'
    ;;
 esac
+AC_SUBST(RSAP_BUILD)
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT

@@ -13,4 +13,6 @@ Version 0.8 (Tue Feb  5 08:06:32 NZDT 2013, released)
     * Fixed build process to correctly find R.h and to switch between host types
       - thanks go to Uwe Ligges, and Brian Ripley, for guidance and corrections
 
+Version 0.9 (Sun Feb 10 07:29:19 NZDT 2013, released)
+    * remove multiple Makevars.*
 
