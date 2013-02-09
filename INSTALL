@@ -12,6 +12,13 @@ available through downloads on the SAP Service Market Place
 
 First Option:
 
+From my own repository - in R:
+
+install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c('--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'))
+
+The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
+
+
 Using devtools, you can directly install the package from GitHub.
 From R:
 
