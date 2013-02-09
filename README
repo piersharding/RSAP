@@ -13,7 +13,12 @@ Please insure that YAML is installed:
 install.packages('yaml')
 
 Installation:
-See the file INSTALL for installation instructions.
+
+install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c('--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'))
+
+The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
+
+See the file INSTALL for full installation instructions.
 
 The package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
 
