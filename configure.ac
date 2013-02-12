@@ -8,12 +8,12 @@ AC_ARG_WITH([nwrfcsdk-include],
             AC_HELP_STRING([--with-nwrfcsdk-include=INCLUDE_PATH],
                            [the location of SAP NW RFCSDK header files]),
             [nwrfcsdk_include_path=$withval])
-RSAP_CPPFLAGS="-I."
+PKG_CPPFLAGS="-I."
 if test [ -n "$nwrfcsdk_include_path" ] ; then
-   RSAP_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
+   PKG_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
 else
   if test [ -n "${NWRFCSDK_INCLUDE}" ] ; then
-     RSAP_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
+     PKG_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
   fi
 fi
 
@@ -41,13 +41,10 @@ echo "R_HOME is: ${R_HOME}"
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CPP=`"${R_HOME}/bin/R" CMD config CPP`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-RSAP_EXT_CPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 EXTCPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
 
-CPPFLAGS="${CPPFLAGS} ${CFLAGS} ${EXTCPPFLAGS} ${RSAP_CPPFLAGS}"
-PKG_CPPFLAGS="${PKG_CPPFLAGS} ${EXTCPPFLAGS} "
-
+CPPFLAGS="${CPPFLAGS} ${CFLAGS} ${EXTCPPFLAGS} ${PKG_CPPFLAGS}"
 echo "All base CPP flags are: ${CPPFLAGS} "
 
 dnl Check the headers can be found
@@ -72,12 +69,11 @@ AC_TRY_LINK(
 dnl for unixODBC header
 AC_CHECK_SIZEOF(long, 4)
 
-RSAP_CPPFLAGS="${RSAP_CPPFLAGS} "
-echo "NW RFC SDK flags: ${RSAP_CPPFLAGS}"
+PKG_CPPFLAGS="${PKG_CPPFLAGS} -DSAPwithUNICODE  -DSAPonUNIX   -DSAPwithTHREADS"
+echo "NW RFC SDK flags: ${PKG_CPPFLAGS}"
 
-dnl substitute RSAP_CPPFLAGS and LIBS
+dnl substitute PKG_CPPFLAGS and LIBS
 AC_SUBST(PKG_CPPFLAGS)
-AC_SUBST(RSAP_CPPFLAGS)
 AC_SUBST(PKG_LIBS)
 AC_SUBST(LIBS)
 AC_CONFIG_HEADERS([src/config.h])
@@ -96,23 +92,13 @@ all: $(SHLIB)
 $(SHLIB): RSAP.o
 
 RSAP.o: RSAP.c
-	$(CC) -E -c $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS) $(OPTIMIZE) $(MPOLLUTE) $(CCCDLFLAGS)  -DSAPwithUNICODE  -DSAPonUNIX   -DSAPwithTHREADS  RSAP.c > RSAP.ii
+	$(CC) -E -c $(ALL_CFLAGS) $(ALL_CPPFLAGS) RSAP.c > RSAP.ii
 	perl ../tools/u16lit.pl -le RSAP.ii
-	$(CC) -c  $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS)  -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fno-strict-aliasing -pipe -fstack-protector -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g  -fPIC -DSAPwithUNICODE  -DSAPonUNIX  -D__NO_MATH_INLINES -fPIC  -DSAPwithTHREADS   RSAP.i
+	$(CC) -c $(ALL_CFLAGS) $(ALL_CPPFLAGS) RSAP.i
 '
     ;;
   *)
     echo "We dont have Linux :-("
-RSAP_BUILD='
-
-all: $(SHLIB)
-
-$(SHLIB): RSAP.o
-
-RSAP.o: RSAP.c
-	$(CC) -c  $(PKG_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)  $(RSAP_CPPFLAGS)  $(OPTIMIZE) $(MPOLLUTE) $(CCCDLFLAGS)  -D_REENTRANT -fno-strict-aliasing -pipe -fstack-protector -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g  -fPIC -DSAPwithUNICODE  -DSAPonUNIX  -D__NO_MATH_INLINES -fPIC  -DSAPwithTHREADS   RSAP.c
-
-'
    ;;
 esac
 AC_SUBST(RSAP_BUILD)
