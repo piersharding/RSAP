@@ -1,6 +1,6 @@
 test.program_read <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     parms <- list('PROGRAM_NAME' = 'SAPLGRFC')
     res <- RSAPInvoke(conn, "RPY_PROGRAM_READ", parms)
     #str(res$PROG_INF)

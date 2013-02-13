@@ -1,6 +1,6 @@
 test.read_cube <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     res <- RSAPListCubes(conn)
     print(res)
     #res <- RSAPGetCube(conn, '0D_NW_T01')

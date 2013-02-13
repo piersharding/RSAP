@@ -1,6 +1,6 @@
 test.read_table <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     #res <- RSAPReadTable(conn, "SFLIGHTS2")
     res <- readTable(conn, "SFLIGHTS2")
     str(res)

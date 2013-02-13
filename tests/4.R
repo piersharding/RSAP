@@ -1,6 +1,6 @@
 test.read_table <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     parms <- list('DELIMITER' = '|',
                   'ROWCOUNT' = 2,
                   'QUERY_TABLE' = 'T000')

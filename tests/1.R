@@ -1,6 +1,6 @@
 test.connecting <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     checkTrue(typeof(attr(conn, 'handle_ptr')) == 'externalptr')
     checkTrue(!is.null(attr(conn, 'handle_ptr')))
     info <- RSAPGetInfo(conn)

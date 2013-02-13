@@ -1,6 +1,6 @@
 test.deep_structure <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     parms <- list('IMPORTSTRUCT' = list(I = 123, C = 'AbCdEf', STR =  'The quick brown fox ...'))
     res <- RSAPInvoke(conn, "STFC_DEEP_STRUCTURE", parms)
     #str(res)

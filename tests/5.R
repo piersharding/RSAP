@@ -1,6 +1,6 @@
 test.changing <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     parms <- list('START_VALUE' = 2,
                   'COUNTER' = 10)
     res <- RSAPInvoke(conn, "STFC_CHANGING", parms)

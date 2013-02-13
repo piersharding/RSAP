@@ -1,6 +1,6 @@
 test.get_table <- function()
 {
-    conn <- RSAPConnect("sap.yml")
+    conn <- RSAPConnect("tests/sap.yml")
     parms <- list('BYPASS_BUFFER' = 'X',
                   'MAX_ENTRIES' = 10,
                   'TABLE_NAME' = 'T005')
