@@ -2,15 +2,15 @@
 RSAP - An R interface to SAP NetWeaver R/3 systems using the RFC protocol
 -------------------------------------------------------------------------
 
-Copyright (C) Piers Harding 2012 - and beyond, All rights reserved
+Copyright (C) Piers Harding 2013 - and beyond, All rights reserved
 
 == Summary
 
 Welcome to the RSAP R module.  This module is intended to facilitate RFC calls to an SAP R/3 system of release 4.6x and above.  It may work for earlier versions but it hasn't been tested.
 
 Prerequisites:
-Please insure that YAML is installed:
-install.packages('yaml')
+Please insure that YAML and reshape are installed:
+install.packages(c('yaml', 'reshape'))
 
 Installation:
 

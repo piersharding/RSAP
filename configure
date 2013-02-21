@@ -2218,16 +2218,16 @@ if test "${with_nwrfcsdk_include+set}" = set; then :
   withval=$with_nwrfcsdk_include; nwrfcsdk_include_path=$withval
 fi
 
-PKG_CPPFLAGS="-I."
+RSAP_CPPFLAGS="-I."
 if test  -n "$nwrfcsdk_include_path"  ; then
-   PKG_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
+   RSAP_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
 else
   if test  -n "${NWRFCSDK_INCLUDE}"  ; then
-     PKG_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
+     RSAP_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
   fi
 fi
 
-LIBS=" -lsapnwrfc -lsapucum "
+RSAP_LIBS=" -lsapnwrfc -lsapucum "
 
 # Check whether --with-nwrfcsdk-lib was given.
 if test "${with_nwrfcsdk_lib+set}" = set; then :
@@ -2235,10 +2235,10 @@ if test "${with_nwrfcsdk_lib+set}" = set; then :
 fi
 
 if test  -n "$nwrfcsdk_lib_path"  ; then
-   LIBS=" -L${nwrfcsdk_lib_path} ${LIBS}"
+   RSAP_LIBS=" -L${nwrfcsdk_lib_path} ${RSAP_LIBS}"
 else
   if test  -n "${NWRFCSDK_LIBS}"  ; then
-     LIBS=" -L${NWRFCSDK_LIBS} ${LIBS}"
+     RSAP_LIBS=" -L${NWRFCSDK_LIBS} ${RSAP_LIBS}"
   fi
 fi
 
@@ -2253,6 +2253,7 @@ CPP=`"${R_HOME}/bin/R" CMD config CPP`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 EXTCPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
+PKG_CPPFLAGS="${PKG_CPPFLAGS} ${RSAP_CPPFLAGS}"
 
 CPPFLAGS="${CPPFLAGS} ${CFLAGS} ${EXTCPPFLAGS} ${PKG_CPPFLAGS}"
 echo "All base CPP flags are: ${CPPFLAGS} "
@@ -3460,7 +3461,9 @@ if test "${ac_cv_header_sapnwrfc_h}" = no; then
    as_fn_error $? "\"SAPNWRFCSDK header sapnwrfc.h not found\"" "$LINENO" 5
 fi
 
-PKG_LIBS=" ${LIBS} "
+PKG_LIBS=" ${RSAP_LIBS} "
+save_LIBS="${LIBS}"
+LIBS="${LIBS} ${PKG_LIBS}"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -3489,6 +3492,7 @@ else
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+LIBS="${save_LIBS}"
 
 # The cast to long int works around a bug in the HP C Compiler
 # version HP92453-01 B.11.11.23709.GP, which incorrectly rejects
@@ -3526,7 +3530,6 @@ _ACEOF
 
 PKG_CPPFLAGS="${PKG_CPPFLAGS} -DSAPwithUNICODE  -DSAPonUNIX   -DSAPwithTHREADS"
 echo "NW RFC SDK flags: ${PKG_CPPFLAGS}"
-
 
 
 

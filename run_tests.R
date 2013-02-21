@@ -2,7 +2,7 @@
 library(RUnit)
 library(RSAP)
  
-test.suite <- defineTestSuite("example",
+test.suite <- defineTestSuite("RSAP.core.tests",
                               dirs = file.path("tests"),
                               testFileRegexp = '^\\d+\\.R')
  

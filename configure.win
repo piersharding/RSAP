@@ -1,0 +1,15 @@
+#!/bin/sh
+
+nwrfcsdk="C:/nwrfcsdk"
+nwrfcsdk_lib="${nwrfcsdk}/lib"
+nwrfcsdk_include="${nwrfcsdk}/include"
+
+if [ ! -d "${nwrfcsdk_lib}" ] ; then
+  echo "ERROR: " ${nwrfcsdk_lib} " lib directory does not exist.  You must download the NW RFC SDK and ensure that it is located in ${nwrfcsdk}. " >&2
+  exit 1
+fi
+
+if [ ! -d "${nwrfcsdk_include}" ] ; then
+  echo "ERROR: " ${nwrfcsdk_include} " include directory does not exist.  You must download the NW RFC SDK and ensure that it is located in ${nwrfcsdk}. " >&2
+  exit 1
+fi

@@ -8,26 +8,26 @@ AC_ARG_WITH([nwrfcsdk-include],
             AC_HELP_STRING([--with-nwrfcsdk-include=INCLUDE_PATH],
                            [the location of SAP NW RFCSDK header files]),
             [nwrfcsdk_include_path=$withval])
-PKG_CPPFLAGS="-I."
+RSAP_CPPFLAGS="-I."
 if test [ -n "$nwrfcsdk_include_path" ] ; then
-   PKG_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
+   RSAP_CPPFLAGS="-I. -I${nwrfcsdk_include_path}"
 else
   if test [ -n "${NWRFCSDK_INCLUDE}" ] ; then
-     PKG_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
+     RSAP_CPPFLAGS="-I. -I${NWRFCSDK_INCLUDE}"
   fi
 fi
 
 dnl ditto for a library path
-LIBS=" -lsapnwrfc -lsapucum "
+RSAP_LIBS=" -lsapnwrfc -lsapucum "
 AC_ARG_WITH([nwrfcsdk-lib],
             AC_HELP_STRING([--with-nwrfcsdk-lib=LIB_PATH],
                            [the location of SAP NW RFCSDK libraries]),
             [nwrfcsdk_lib_path=$withval])
 if test [ -n "$nwrfcsdk_lib_path" ] ; then
-   LIBS=" -L${nwrfcsdk_lib_path} ${LIBS}"
+   RSAP_LIBS=" -L${nwrfcsdk_lib_path} ${RSAP_LIBS}"
 else 
   if test [ -n "${NWRFCSDK_LIBS}" ] ; then
-     LIBS=" -L${NWRFCSDK_LIBS} ${LIBS}"
+     RSAP_LIBS=" -L${NWRFCSDK_LIBS} ${RSAP_LIBS}"
   fi
 fi
 
@@ -43,6 +43,7 @@ CPP=`"${R_HOME}/bin/R" CMD config CPP`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 EXTCPPFLAGS=`"${R_HOME}/bin/R" CMD config --cppflags`
+PKG_CPPFLAGS="${PKG_CPPFLAGS} ${RSAP_CPPFLAGS}"
 
 CPPFLAGS="${CPPFLAGS} ${CFLAGS} ${EXTCPPFLAGS} ${PKG_CPPFLAGS}"
 echo "All base CPP flags are: ${CPPFLAGS} "
@@ -53,7 +54,9 @@ if test "${ac_cv_header_sapnwrfc_h}" = no; then
    AC_MSG_ERROR("SAPNWRFCSDK header sapnwrfc.h not found")
 fi
 
-PKG_LIBS=" ${LIBS} "
+PKG_LIBS=" ${RSAP_LIBS} "
+save_LIBS="${LIBS}"
+LIBS="${LIBS} ${PKG_LIBS}"
 AC_TRY_LINK(
    [
     #include <sapnwrfc.h>
@@ -65,6 +68,7 @@ AC_TRY_LINK(
        AC_MSG_ERROR([libsapnwrfc is not found!])
    ]
 )
+LIBS="${save_LIBS}"
 
 dnl for unixODBC header
 AC_CHECK_SIZEOF(long, 4)
@@ -75,7 +79,6 @@ echo "NW RFC SDK flags: ${PKG_CPPFLAGS}"
 dnl substitute PKG_CPPFLAGS and LIBS
 AC_SUBST(PKG_CPPFLAGS)
 AC_SUBST(PKG_LIBS)
-AC_SUBST(LIBS)
 AC_CONFIG_HEADERS([src/config.h])
 dnl and do subsitution in the src/Makevars.in and src/config.h
 echo "Platform is: ${R_PLATFORM}"

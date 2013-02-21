@@ -1,7 +1,19 @@
 HowTo install RSAP
 ==================
 
-The package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
+You must download and install the SAP NW RFC SDK first.  This can be obtained from the SAP service portal
+ http://service.sap.com/swdc
+-> Download
+-> Support Packages and Patches
+-> Entry by Application Group
+-> Additional Components
+-> SAP NW RFC SDK
+[on to your particular version and OS flavour]
+
+Please insure that YAML and reshape are installed:
+install.packages(c('yaml', 'reshape'))
+
+The RSAP package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
 
 
 The easiest way to install RSAP is to clone the repository and use
@@ -14,9 +26,18 @@ First Option:
 
 From my own repository - in R:
 
+For UNIX like OSes:
+
 install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c('--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'))
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
+
+For Windows:
+ * You must have downloaded and unpacked the SAP NW RFC SDK into C:/nwrfcsdk
+ * Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version
+ * Then run:
+install.packages('RSAP', repos=c('http://piersharding.com/R'), type="source")
+
 
 
 Using devtools, you can directly install the package from GitHub.
@@ -57,18 +78,16 @@ R CMD INSTALL --build --preclean --clean .
 This has been tested under Ubuntu 12.04 - how it builds on
 other platforms is unknown.
 
+The generic compile instructions from SAP for building with the NW RFC SDK can be found here http://www.stechno.net/sap-notes.html?view=sapnote&id=1056696 (OSS Note 1056696).
 
-Windows build instructions
-============================
+
+
+Additional Windows build help
+=============================
 
 Thanks to Alvaro for making this work.  This was last used for R-2.15.0 under 64bit architecture.
 
 Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version
-Inside the /src folder copy all the content from the following folders:
-   /include from your R installation
-   /include from your nwrfcsdk folder
-   /lib from your nwrfcsdk folder
 Make sure that you're using the right R for the NWRFCSDK folder...R 64bit for NWRFCSDK 64bit.
- You can check this if you go to Environment Variables --> Path and look for something like this C:\Program Files\R\R-2.15.0\bin\x64 (x32 or x64)
+You can check this if you go to Environment Variables --> Path and look for something like this C:\Program Files\R\R-2.15.0\bin\x64 (x32 or x64)
 
-C:\> R CMD INSTALL --build --preclean --clean --no-multiarch -l C:/RSAP RSAP
