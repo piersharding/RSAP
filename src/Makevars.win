@@ -1,3 +1,3 @@
-PKG_LIBS=-L. -L"C:/nwrfcsdk/lib" -lsapnwrfc -llibsapucum
+PKG_LIBS=-L. -L"C:/nwrfcsdk/lib" -lsapnwrfc -llibsapucum sapnwrfc.dll libsapucum.dll
 PKG_CPPFLAGS=-I. -I"C:/nwrfcsdk/include" -DSAPwithUNICODE -DUNICODE -D_UNICODE -D_AFXDLL -D_CRT_NON_CONFORMING_SWPRINTFS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DSAPonNT -DSAP_PLATFORM_MAKENAME=ntintel 
 
