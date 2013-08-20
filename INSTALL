@@ -19,7 +19,7 @@ The RSAP package can be found at http://cran.r-project.org/web/packages/RSAP/ind
 The easiest way to install RSAP is to clone the repository and use
 R CMD INSTALL
 
-You must ensure that you have the NW RFC SDK installed which is 
+You must ensure that you have the NW RFC SDK installed which is
 available through downloads on the SAP Service Market Place
 
 First Option:
@@ -34,10 +34,9 @@ The args= value passed in must correspond to the correct location for your setup
 
 For Windows:
  * You must have downloaded and unpacked the SAP NW RFC SDK into C:/nwrfcsdk
- * Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version
+ * Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version - see the additional notes for windows below
  * Then run:
-install.packages('RSAP', repos=c('http://piersharding.com/R'), type="source")
-
+install.packages('RSAP', repos=c('http://piersharding.com/R'), type="source", configure.args=c('--with-nwrfcsdk-include=C:/nwrfcsdk/include --with-nwrfcsdk-lib=C:/nwrfcsdk/lib'))
 
 
 Using devtools, you can directly install the package from GitHub.
@@ -45,7 +44,7 @@ From R:
 
 install.packages('devtools')
 library(devtools)
-install_github('RSAP', username='piersharding', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'"))
+install_github('RSAP', username='piersharding', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
@@ -70,7 +69,7 @@ git clone git@github.com:piersharding/RSAP.git
 or:
 retrieve and unpack https://github.com/piersharding/RSAP/archive/master.zip
 
-Then run the build and install command from the package root 
+Then run the build and install command from the package root
 directory:
 
 R CMD INSTALL --build --preclean --clean .
@@ -91,3 +90,26 @@ Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R insta
 Make sure that you're using the right R for the NWRFCSDK folder...R 64bit for NWRFCSDK 64bit.
 You can check this if you go to Environment Variables --> Path and look for something like this C:\Program Files\R\R-2.15.0\bin\x64 (x32 or x64)
 
+
+For R 3.x :
+
+Get the NW RFC SDK from SAP service.sap.com and unpack it in C:/nwrfcsdk - make sure that you have the header and library directories positioned as C:/nwrfcsdk/include and C:/nwrfcsdk/lib.  Copy the contents of C:/nwrfcsdk/lib into the Windows system32 directory ie: C:/windows/system32.
+
+Install the latest RTools from http://cran.r-project.org/bin/windows/Rtools/ and ensure that you have the corresponding latest R from http://cran.r-project.org/bin/windows/base/.  Install and reboot.  You must make absolutely sure that the RTools install worked correctly - check for any errors when you startup R.
+
+Install devtools for R http://cran.r-project.org/web/packages/devtools/index.html - to do this (or any core package) start R at the command line and run:
+
+> install.packages('devtools')
+
+Install the dependencies for RSAP :
+
+> install.packages(c('yaml', 'reshape'))
+
+
+Now move onto the main event - startup R again and:
+
+> library(devtools)
+> install_github('RSAP', username='piersharding', args=c("--configure-args=--with-nwrfcsdk-include=C:/nwrfcsdk/include --with-nwrfcsdk-lib=C:/nwrfcsdk/lib' --no-clean-on-error"))
+
+Common problems:
+The most frequent problem is to do with sapnwrfc.dll not being found or not being able to load it's dependencies.  When the load of RSAP.dll fails it should still be left in a location like 'C:/Program Files/R/R-3.0.1/library/RSAP/libs/x64/RSAP.dll' .  Download the dpendency walker from http://www.dependencywalker.com/ and test it against RSAP.dll.  This should show which libs are unresolved.  Copy missing libraries into the system32 directory, and then repeat the process until resolved.
