@@ -12,7 +12,7 @@ test.connecting <- function()
     checkEqualsNumeric(as.numeric(info[['sysNumber']]), 42)
     checkTrue(RSAPClose(conn))
 
-    conn <- RSAPConnect(ashost="nplhost", sysnr="42",
+    conn <- RSAPConnect(ashost="/H/toad/S/3299/H/nplhost", sysnr="42",
                         client="001", user="developer", 
                         passwd="developer", lang="EN", 
                         trace="1", lcheck="1")
