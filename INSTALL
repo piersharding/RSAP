@@ -32,6 +32,13 @@ install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c(
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
+
+Under *NIX YOU MUST MAKE SURE THAT YOU ADD THE LIB PATH TO LD_LIBRARY_PATH
+EG:
+export LD_LIBRARY_PATH=/usr/sap/rfcsdk/lib
+
+Or better still add this to your ldconfig (Linux) in /etc/ld.so.conf (don't forget to run ldconfig afterwards)
+
 For Windows:
  * You must have downloaded and unpacked the SAP NW RFC SDK into C:/nwrfcsdk
  * Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version - see the additional notes for windows below
