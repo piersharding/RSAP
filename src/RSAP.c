@@ -517,6 +517,9 @@ SEXP get_byte_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, unsigned len){
 								CHAR(u16to8(errorInfo.message)));
     }
     sp_val = u16to8c((SAP_UC *)buffer, len);
+    // PROTECT(sp_val = mkCharLenCE("", 0, CE_UTF8));
+    // UNPROTECT(1);
+
     free(buffer);
     return sp_val;
 }

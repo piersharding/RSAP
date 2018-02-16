@@ -101,12 +101,12 @@ RSAPInvoke <- function(con, func, parms)
 }
 
 
-RSAPReadTable <- function(con, saptable, options=list(), fields=list())
+RSAPReadTable <- function(con, saptable, options=list(), delimiter=';', fields=list())
 {
     if(!RSAPValidHandle(con))
        stop("argument is not a valid RSAP con")
     library(reshape)
-    parms <- list('DELIMITER' = ';',
+    parms <- list('DELIMITER' = delimiter,
               'QUERY_TABLE' = saptable,
               'OPTIONS' = list('TEXT' = options),
               'FIELDS' = list('FIELDNAME' = fields)
@@ -118,7 +118,7 @@ RSAPReadTable <- function(con, saptable, options=list(), fields=list())
         data <- data.frame()
     }
     else {
-	    data <- data.frame(res$DATA, colsplit(res$DATA$WA, split = ";", names = flds))
+	    data <- data.frame(res$DATA, colsplit(res$DATA$WA, split = delimiter, names = flds))
     }
 	
 	for (i in 1:length(flds)) {
