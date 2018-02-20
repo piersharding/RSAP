@@ -6,13 +6,16 @@
   Open connections to an SAP System for RFC calls
 }
 \usage{
-RSAPReadTable(con, saptable, options=list(), fields=list())
+RSAPReadTable(con, saptable, options=list(), fields=list(), delimiter=';', nrows=-1, skip=0)
 }%"
 \arguments{
-  \item{con}{an Open SAP RFC Conneciton handle}
-  \item{saptable}{The Data Dictionary name of a table to read}
-  \item{options}{list of string values of SQL WHERE clause statements to apply to the table select}
-  \item{fields}{A list of column names that you want returned from the table}
+  \item{con}{an Open SAP RFC Connection handle.}
+  \item{saptable}{the Data Dictionary name of a table to read.}
+  \item{options}{list of string values of SQL WHERE clause statements to apply to the table select.}
+  \item{fields}{a list of column names that you want returned from the table.}
+  \item{delimiter}{the column delimiter character. As values in rows returned by the RFC handler are not enquoted, it may be necessary to use a character that is less likely to occur in strings than the default semicolon.}
+  \item{nrows}{integer: the maximum number of rows to retrieve. The default indicates all rows to be retrieved.}
+  \item{skip}{integer: the number of lines of the table to skip before beginning to retrieve data.}
 }
 \details{
   \preformatted{
@@ -33,7 +36,7 @@ RSAPReadTable(con, saptable, options=list(), fields=list())
 }
 
 \note{
-  Not much to note here.
+  Depending on the NW RFC version used in the installation of RSAP, there could be limits on the parameters nrows and skip based on their internal types. For example, in some older versions of NW RFC the internal parameter ROWSKIPS used by skip has SAP-type INT4 and is thus limited to 999999.
 }
 
 \value{
