@@ -101,7 +101,7 @@ RSAPInvoke <- function(con, func, parms)
 }
 
 
-RSAPReadTable <- function(con, saptable, options=list(), delimiter=';', fields=list())
+RSAPReadTable <- function(con, saptable, options=list(), delimiter=';', skip=0, n=-1L, fields=list())
 {
     if(!RSAPValidHandle(con))
        stop("argument is not a valid RSAP con")
@@ -109,10 +109,14 @@ RSAPReadTable <- function(con, saptable, options=list(), delimiter=';', fields=l
     parms <- list('DELIMITER' = delimiter,
               'QUERY_TABLE' = saptable,
               'OPTIONS' = list('TEXT' = options),
-              'FIELDS' = list('FIELDNAME' = fields)
+              'FIELDS' = list('FIELDNAME' = fields),
+              'ROWSKIPS' = skip
               )
-	res <- RSAPInvoke(con, "RFC_READ_TABLE", parms)
-	flds <- sub("\\s+$", "", res$FIELDS$FIELDNAME)
+    if (n != -1L){
+        parms[['ROWCOUNT']] <- n
+    }
+    res <- RSAPInvoke(con, "RFC_READ_TABLE", parms)
+    flds <- sub("\\s+$", "", res$FIELDS$FIELDNAME)
     data <- NULL
     if (length(res$DATA$WA) == 0) {
         data <- data.frame()
