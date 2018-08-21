@@ -444,7 +444,7 @@ SEXP get_num_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, unsigned ulen){
 								CHAR(u16to8(errorInfo.key)),
 								CHAR(u16to8(errorInfo.message)));
     }
-    PROTECT(rfc_float = ScalarReal((double) atof(buffer)));
+    PROTECT(rfc_float = ScalarReal((double) atof(CHAR(u16to8((SAP_UC *)buffer)))));
     free(buffer);
     UNPROTECT(1);
     return rfc_float;
@@ -472,7 +472,7 @@ SEXP get_bcd_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name){
 								CHAR(u16to8(errorInfo.message)));
     }
 
-    PROTECT(rfc_float = ScalarReal((double) atof(buffer)));
+    PROTECT(rfc_float = ScalarReal((double) atof(CHAR(u16to8((SAP_UC *)buffer)))));
     free(buffer);
     UNPROTECT(1);
     return rfc_float;

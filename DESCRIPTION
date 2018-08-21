@@ -1,6 +1,6 @@
 Package: RSAP
-Version: 0.9
-Date: 2013-02-10
+Version: 0.10
+Date: 2018-08-22
 Author: Piers Harding <piers@ompka.net>
 Maintainer: Piers Harding <piers@ompka.net>
 Title: SAP Netweaver RFC connector for R
@@ -13,4 +13,4 @@ URL: http://github.com/piersharding/RSAP
 BugReports: http://github.com/piersharding/RSAP/issues
 BuildVignettes: no
 Repository: CRAN
-Date/Publication: 2013-02-10 12:00:00
+Date/Publication: 2018-08-22 12:00:00

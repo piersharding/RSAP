@@ -18,3 +18,6 @@ Version 0.9 (Sun Feb 10 07:29:19 NZDT 2013, released)
     * add configure.win and correct Makevars.win
     * improve install instructions - thanks Alvaro
 
+Version 0.10 (Wed Aug 22 07:01:29 NZST 2018, release)
+    * fixed float values for get_bcd and get_num - thanks morganw3
+
