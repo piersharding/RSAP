@@ -21,3 +21,5 @@ Version 0.9 (Sun Feb 10 07:29:19 NZDT 2013, released)
 Version 0.10 (Wed Aug 22 07:01:29 NZST 2018, release)
     * fixed float values for get_bcd and get_num - thanks morganw3
 
+Version 0.11 (Mon Sep 10 06:42:35 NZST 2018, release)
+    * fixed raw values - thanks morganw3

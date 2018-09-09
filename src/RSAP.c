@@ -421,8 +421,9 @@ SEXP get_xstring_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name){
 								CHAR(u16to8(errorInfo.message)));
     }
 
-    sp_val = u16to8((SAP_UC *)buffer);
+    PROTECT(sp_val = mkCharLenCE(buffer, retStrLen, CE_NATIVE));
     free(buffer);
+    UNPROTECT(1);
     return sp_val;
 }
 
@@ -516,11 +517,10 @@ SEXP get_byte_value(DATA_CONTAINER_HANDLE hcont, SAP_UC *name, unsigned len){
 								CHAR(u16to8(errorInfo.key)),
 								CHAR(u16to8(errorInfo.message)));
     }
-    sp_val = u16to8c((SAP_UC *)buffer, len);
-    // PROTECT(sp_val = mkCharLenCE("", 0, CE_UTF8));
-    // UNPROTECT(1);
-
+    PROTECT(sp_val = allocVector(RAWSXP, len));
+    memcpy(RAW(sp_val), buffer, len);
     free(buffer);
+    UNPROTECT(1);
     return sp_val;
 }
 
@@ -647,7 +647,7 @@ void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
 			SET_VECTOR_ELT(VECTOR_ELT(value, fld), 0, get_structure_value(hcont, fieldDesc.name));
 			break;
 		case RFCTYPE_BYTE:
-			SET_STRING_ELT(VECTOR_ELT(value, fld), 0, get_byte_value(hcont, fieldDesc.name, fieldDesc.nucLength));
+			SET_VECTOR_ELT(VECTOR_ELT(value, fld), 0, get_byte_value(hcont, fieldDesc.name, fieldDesc.nucLength));
 			break;
 		case RFCTYPE_INT:
 			INTEGER(VECTOR_ELT(value, fld))[0] = INTEGER(get_int_value(hcont, fieldDesc.name))[0];
@@ -808,7 +808,7 @@ SEXP get_table_value(RFC_TABLE_HANDLE tableHandle){
 						SET_VECTOR_ELT(VECTOR_ELT(value, fld), r, get_structure_value(tableHandle, fieldDesc.name));
 						break;
 					case RFCTYPE_BYTE:
-						SET_STRING_ELT(VECTOR_ELT(value, fld), r, get_byte_value(tableHandle, fieldDesc.name, fieldDesc.nucLength));
+						SET_VECTOR_ELT(VECTOR_ELT(value, fld), r, get_byte_value(tableHandle, fieldDesc.name, fieldDesc.nucLength));
 						break;
 					case RFCTYPE_INT:
 						INTEGER(VECTOR_ELT(value, fld))[r] = INTEGER(get_int_value(tableHandle, fieldDesc.name))[0];
