@@ -593,7 +593,6 @@ void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
 	// set the column type
 	switch (fieldDesc.type) {
 		case RFCTYPE_FLOAT:
-		case RFCTYPE_NUM:
 		case RFCTYPE_BCD:
 			SET_VECTOR_ELT(value, fld, allocVector(REALSXP, 1));
 			break;
@@ -616,6 +615,7 @@ void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
 		case RFCTYPE_STRING:
 		case RFCTYPE_XSTRING:
 		case RFCTYPE_CHAR:
+		case RFCTYPE_NUM:
 		default:
 			SET_VECTOR_ELT(value, fld, allocVector(STRSXP, 1));
 			break;
@@ -625,9 +625,6 @@ void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
 	switch (fieldDesc.type) {
 		case RFCTYPE_FLOAT:
 			REAL(VECTOR_ELT(value, fld))[0] = REAL(get_float_value(hcont, fieldDesc.name))[0];
-			break;
-		case RFCTYPE_NUM:
-			REAL(VECTOR_ELT(value, fld))[0] = REAL(get_num_value(hcont, fieldDesc.name, fieldDesc.nucLength))[0];
 			break;
 		case RFCTYPE_BCD:
 			REAL(VECTOR_ELT(value, fld))[0] = REAL(get_bcd_value(hcont, fieldDesc.name))[0];
@@ -671,6 +668,7 @@ void get_field_value(DATA_CONTAINER_HANDLE hcont, RFC_FIELD_DESC fieldDesc, SEXP
 			SET_STRING_ELT(VECTOR_ELT(value, fld), 0, get_xstring_value(hcont, fieldDesc.name));
 			break;
 		case RFCTYPE_CHAR:
+		case RFCTYPE_NUM:
 		default:
 			SET_STRING_ELT(VECTOR_ELT(value, fld), 0, get_char_value(hcont, fieldDesc.name, fieldDesc.nucLength));
 			break;
@@ -736,7 +734,6 @@ SEXP get_table_value(RFC_TABLE_HANDLE tableHandle){
 			// set the column type
 			switch (fieldDesc.type) {
 				case RFCTYPE_FLOAT:
-				case RFCTYPE_NUM:
 				case RFCTYPE_BCD:
 					SET_VECTOR_ELT(value, fld, allocVector(REALSXP, tabLen));
 					break;
@@ -759,6 +756,7 @@ SEXP get_table_value(RFC_TABLE_HANDLE tableHandle){
 				case RFCTYPE_STRING:
 				case RFCTYPE_XSTRING:
 				case RFCTYPE_CHAR:
+				case RFCTYPE_NUM:
 				default:
 					SET_VECTOR_ELT(value, fld, allocVector(STRSXP, tabLen));
 					break;
@@ -786,9 +784,6 @@ SEXP get_table_value(RFC_TABLE_HANDLE tableHandle){
 				switch (fieldDesc.type) {
 					case RFCTYPE_FLOAT:
 						REAL(VECTOR_ELT(value, fld))[r] = REAL(get_float_value(tableHandle, fieldDesc.name))[0];
-						break;
-					case RFCTYPE_NUM:
-						REAL(VECTOR_ELT(value, fld))[r] = REAL(get_num_value(tableHandle, fieldDesc.name, fieldDesc.nucLength))[0];
 						break;
 					case RFCTYPE_BCD:
 						REAL(VECTOR_ELT(value, fld))[r] = REAL(get_bcd_value(tableHandle, fieldDesc.name))[0];
@@ -832,6 +827,7 @@ SEXP get_table_value(RFC_TABLE_HANDLE tableHandle){
 						SET_STRING_ELT(VECTOR_ELT(value, fld), r, get_xstring_value(tableHandle, fieldDesc.name));
 						break;
 					case RFCTYPE_CHAR:
+					case RFCTYPE_NUM:
 					default:
 						SET_STRING_ELT(VECTOR_ELT(value, fld), r, get_char_value(tableHandle, fieldDesc.name, fieldDesc.nucLength));
 						break;
