@@ -43,7 +43,10 @@ RSAPExecInfoQuery(con, infoprovider, infoquery)
 }
 \examples{\dontrun{
 # read the NW demo data info cube
-  res <- RSAPExecInfoQuery(con, "0D_NW_T01", "20120716",chars=list("0D_NW_SORG", "0D_NW_PROD"), kfigures=list("0D_NW_NETV"))
+  res <- RSAPExecInfoQuery(con, "0D_NW_T01",
+                           "20120716",chars=list("0D_NW_SORG",
+                                                 "0D_NW_PROD"),
+                           kfigures=list("0D_NW_NETV"))
 }}
 \keyword{IO}
 \keyword{SAP}

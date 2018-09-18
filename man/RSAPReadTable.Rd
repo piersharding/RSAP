@@ -6,7 +6,8 @@
   Open connections to an SAP System for RFC calls
 }
 \usage{
-RSAPReadTable(con, saptable, options=list(), fields=list(), delimiter=';', nrows=-1, skip=0)
+RSAPReadTable(con, saptable, options=list(), fields=list(),
+                             delimiter=';', nrows=-1, skip=0)
 }%"
 \arguments{
   \item{con}{an Open SAP RFC Connection handle.}
@@ -50,7 +51,10 @@ RSAPReadTable(con, saptable, options=list(), fields=list(), delimiter=';', nrows
 }
 \examples{\dontrun{
 # read the flight data demo table
-res <- RSAPReadTable(con, "SFLIGHTS2", options=list("CARRID = 'AA'"), fields=list('CARRID', 'CONNID', 'FLDATE', 'PRICE'))
+res <- RSAPReadTable(con, "SFLIGHTS2",
+                     options=list("CARRID = 'AA'"),
+                     fields=list('CARRID', 'CONNID', 'FLDATE',
+                                 'PRICE'))
 }}
 \keyword{IO}
 \keyword{SAP}

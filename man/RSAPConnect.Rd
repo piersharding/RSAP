@@ -44,7 +44,10 @@ RSAPConnect(...)
 }
 \examples{\dontrun{
 # full parameter specification
-con <- RSAPConnect(ashost="nplhost", sysnr="42", client="001", user="developer", passwd="developer", lang="EN", trace="1", lcheck="1")
+con <- RSAPConnect(ashost="nplhost", sysnr="42",
+                   client="001", user="developer",
+                   passwd="developer", lang="EN",
+                   trace="1", lcheck="1")
 
 # Use a YAML encoded parameter file
 con <- RSAPConnect("sap.yml")

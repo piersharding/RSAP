@@ -27,7 +27,8 @@ RSAPReadCube(con, cube, ref_date, chars=list(), kfigures=list(), options=list())
   res <- RSAPReadCube(con, "0D_NW_T01", "20120716", 
                             chars=list("0D_NW_SORG", "0D_NW_PROD"),
                             kfigures=list("0D_NW_NETV"),
-                            options=list(CHANM=list('0D_NW_SORG'),SIGN=list('I'), COMPOP=list('EQ'), LOW=list('1514')))
+                            options=list(CHANM=list('0D_NW_SORG'),SIGN=list('I'), COMPOP=list('EQ'),
+                            LOW=list('1514')))
   # or alias
   # res <- readCube(con, ...
 
@@ -52,7 +53,10 @@ RSAPReadCube(con, cube, ref_date, chars=list(), kfigures=list(), options=list())
 }
 \examples{\dontrun{
 # read the NW demo data info cube
-  res <- RSAPReadCube(con, "0D_NW_T01", "20120716",chars=list("0D_NW_SORG", "0D_NW_PROD"), kfigures=list("0D_NW_NETV"))
+  res <- RSAPReadCube(con, "0D_NW_T01",
+                      "20120716",chars=list("0D_NW_SORG",
+                                            "0D_NW_PROD"),
+                      kfigures=list("0D_NW_NETV"))
 }}
 \keyword{IO}
 \keyword{SAP}
