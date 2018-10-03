@@ -51,7 +51,7 @@ From R:
 
 install.packages('devtools')
 library(devtools)
-install_github('RSAP', username='piersharding', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
+install_github('piersharding/RSAP', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
