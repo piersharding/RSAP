@@ -129,7 +129,7 @@ RSAPReadTable <- function(con, saptable, options=list(), fields=list(), delimite
 		f <- flds[i]
 		typ <- res$FIELDS$TYPE[i]
 		if (typ == 'N' || typ == 'I' || typ == 'P') {
-			data[[f]] <- as.numeric(unlist(lapply(data[[f]], FUN=function (x) {sub("[^\\d\\.\\-\\,]", "", x, perl=TRUE)})));
+			data[[f]] <- as.numeric(unlist(lapply(data[[f]], FUN=function (x) { sub("([0-9.]+)-$", "-\\1", gsub("[^\\d\\.\\-]", "", x, perl=TRUE)) })));
 			data[[f]][is.na(data[[f]])] <- 0 
 		} else {
 		    data[[f]] <- sub("\\s+$", "", data[[f]]);

@@ -23,3 +23,7 @@ Version 0.10 (Wed Aug 22 07:01:29 NZST 2018, release)
 
 Version 0.11 (Mon Sep 10 06:42:35 NZST 2018, release)
     * fixed raw values - thanks morganw3
+
+Version 0.13 (Fri Oct  5 08:45:39 NZDT 2018, release)
+    * fixed number conversions for RSAPReadTable() - thanks James Hill
+
