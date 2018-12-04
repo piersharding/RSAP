@@ -45,6 +45,7 @@ For Windows:
  * Then run:
 install.packages('RSAP', repos=c('http://piersharding.com/R'), type="source", configure.args=c('--with-nwrfcsdk-include=C:/nwrfcsdk/include --with-nwrfcsdk-lib=C:/nwrfcsdk/lib'))
 
+An article by Alvaro may also be helpful - https://blogs.sap.com/2012/06/21/analytics-with-sap-and-r-windows-version/ .
 
 Using devtools, you can directly install the package from GitHub.
 From R:
