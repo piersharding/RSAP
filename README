@@ -14,7 +14,10 @@ install.packages(c('yaml', 'reshape'))
 
 Installation:
 
-install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c('--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'))
+install.packages('devtools')
+library(devtools)
+install_github('piersharding/RSAP', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
+
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
@@ -26,7 +29,7 @@ Or better still add this to your ldconfig (Linux) in /etc/ld.so.conf (don't forg
 
 See the file INSTALL  (https://github.com/piersharding/RSAP/blob/master/INSTALL) for full installation instructions.
 
-The package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
+The package can be found at https://github.com/piersharding/RSAP
 
 Examples:
 See the files in the tests/ directory.
@@ -37,7 +40,7 @@ help(RSAP)
 Bugs:
 I appreciate bug reports and patches, just mail me! piers@ompka.net
 
-RSAP is Copyright (c) 2012 - and beyond Piers Harding.
+RSAP is Copyright (c) 2012 - and beyond, Piers Harding.
 It is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either

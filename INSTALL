@@ -13,7 +13,7 @@ You must download and install the SAP NW RFC SDK first.  This can be obtained fr
 Please insure that YAML and reshape are installed:
 install.packages(c('yaml', 'reshape'))
 
-The RSAP package can be found at http://cran.r-project.org/web/packages/RSAP/index.html
+The RSAP package can be found at https://github.com/piersharding/RSAP
 
 
 The easiest way to install RSAP is to clone the repository and use
@@ -28,7 +28,9 @@ From my own repository - in R:
 
 For UNIX like OSes:
 
-install.packages('RSAP', repos=c('http://piersharding.com/R'), configure.args=c('--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib'))
+install.packages('devtools')
+library(devtools)
+install_github('piersharding/RSAP', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
 
 The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
@@ -39,22 +41,20 @@ export LD_LIBRARY_PATH=/usr/sap/rfcsdk/lib
 
 Or better still add this to your ldconfig (Linux) in /etc/ld.so.conf (don't forget to run ldconfig afterwards)
 
+Note: previously, there was a method for installing from CRAN, but this package is no longer hosted on CRAN.
+
+
 For Windows:
  * You must have downloaded and unpacked the SAP NW RFC SDK into C:/nwrfcsdk
  * Download RTools (http://cran.r-project.org/bin/windows/Rtools/) for your R installation version - see the additional notes for windows below
  * Then run:
-install.packages('RSAP', repos=c('http://piersharding.com/R'), type="source", configure.args=c('--with-nwrfcsdk-include=C:/nwrfcsdk/include --with-nwrfcsdk-lib=C:/nwrfcsdk/lib'))
+install.packages('devtools)
+library(devtools)
+install_github('piersharding/RSAP', args=c("--configure-args='--with-nwrfcsdk-include=C:/nwrfcsdk/include --with-nwrfcsdk-lib=C:/nwrfcsdk/lib' --no-clean-on-error"))
+
 
 An article by Alvaro may also be helpful - https://blogs.sap.com/2012/06/21/analytics-with-sap-and-r-windows-version/ .
 
-Using devtools, you can directly install the package from GitHub.
-From R:
-
-install.packages('devtools')
-library(devtools)
-install_github('piersharding/RSAP', args=c("--configure-args='--with-nwrfcsdk-include=/home/piers/code/sap/nwrfcsdk/include --with-nwrfcsdk-lib=/home/piers/code/sap/nwrfcsdk/lib' --no-clean-on-error"))
-
-The args= value passed in must correspond to the correct location for your setup for the INCLUDE and LIB paths to the NW RFC SDK you have installed from SAP.
 
 You must ensure that all your installed packages (especially httr, and stringr) are up to date.  The easiest way to do this is to start R and:
 
